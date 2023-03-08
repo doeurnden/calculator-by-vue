@@ -11,9 +11,9 @@
               <div id="screen_bottom">
                 <!-- v-text is a directive that is used to replace the content of HTML tag with private data -->
                 <!-- It will update the content automatically when data is changed. It is called data reactive -->
-                <span v-text="inputNumber" id="operand1"></span>
-                <span v-text="Operator" id="operator"></span>
-                <span v-text="secondNumber" id="operand2"></span>
+                <span v-text="inputNum" id="operand1"></span>
+                <span v-text="operator" id="operator"></span>
+                <span v-text="secondNum" id="operand2"></span>
               </div>
               <!-- <span id="screen_bottom">0</span> -->
             </div>
@@ -145,135 +145,114 @@ export default {
   data() {
     return {
       // This is the private data section which can be used inside this component
-      inputNumber: 0,
-      tmp:null,
-      isFraction:false,
-      Operator:"",
-      secondNumber:"",
-      memory:0
-      
+      inputNum: 0,
+      tmp: null,
+      isFraction: false,
+      operator: "",
+      secondNum: "",
+      memory: 0
     };
   },
   methods: {
     memoryRead(){
-      if(this.Operator==""){
-        
-        this.inputNumber=this.memory;
-        
-        
-        
+      if(this.operator == ""){
+        this.inputNum = this.memory;
       }else{
-        this.secondNumber=this.memory;
+        this.secondNum = this.memory;
       }
     },
     memoryClear(){
-      this.memory=0
+      this.memory = 0
     },
     memoryAdd(){
-      if(this.Operator==""){
-        
-        this.memory+=this.inputNumber;
-        
+      if(this.operator == ""){
+        this.memory += this.inputNum;
       }else{
-        this.memory+=this.secondNumber;
+        this.memory += this.secondNum;
       }
     },
     memoryMinus(){
-      if(this.Operator==""){
-        
-        this.memory-=this.inputNumber;
+      if(this.operator == ""){
+        this.memory -= this.inputNum;
         
       }else{
-        this.memory-=this.secondNumber;
+        this.memory -= this.secondNum;
       }
     },
     getResult(){
-      if(this.Operator=="+"){
-        this.inputNumber=this.inputNumber+this.secondNumber
-      }else if(this.Operator=="-"){
-        this.inputNumber=this.inputNumber-this.secondNumber
-        
-      }else if(this.Operator=="x"){
-        this.inputNumber=this.inputNumber*this.secondNumber
-        
-      }else if(this.Operator=="÷"){
-        this.inputNumber=this.inputNumber/this.secondNumber
+      if(this.operator == "+"){
+        this.inputNum = this.inputNum + this.secondNum
+      }else if(this.operator == "-"){
+        this.inputNum = this.inputNum - this.secondNum
+      }else if(this.operator == "x"){
+        this.inputNum = this.inputNum * this.secondNum
+      }else if(this.operator == "÷"){
+        this.inputNum = this.inputNum / this.secondNum
         
       }
-      this.Operator="";
-      this.secondNumber=""
+      this.operator = "";
+      this.secondNum = ""
     },
     clear(){
-      this.inputNumber=0;
-      this.Operator="";
-      this.isFraction=false
-      this.secondNumber="";
+      this.inputNum = 0;
+      this.operator = "";
+      this.isFraction = false
+      this.secondNum = "";
     },
     switchSign(){
-      if(this.Operator==""){
-        this.inputNumber=this.inputNumber*-1;
-        
+      if(this.operator == ""){
+        this.inputNum = this.inputNum*-1;
       }else{
-        this.secondNumber= this.secondNumber*-1;
+        this.secondNum = this.secondNum*-1;
       }
     }
     ,
     
     deleteLast(){
-      if(this.Operator==""){
-        if(!isNaN(Number(`${this.inputNumber}`.slice(0, -1)))){
-          this.inputNumber=Number(`${this.inputNumber}`.slice(0, -1));
-          
+      if(this.operator == ""){
+        if(!isNaN(Number(`${this.inputNum}`.slice(0, -1)))){
+          this.inputNum = Number(`${this.inputNum}`.slice(0, -1));
         }
-        
       }else{
-        if(!isNaN(Number(`${this.secondNumber}`.slice(0, -1)))){
-          this.secondNumber=Number(`${this.secondNumber}`.slice(0, -1));
+        if(!isNaN(Number(`${this.secondNum}`.slice(0, -1)))){
+          this.secondNum = Number(`${this.secondNum}`.slice(0, -1));
           
         }
       }
     },
     setOperator(operator){
-      this.Operator=operator;
-      
+      this.operator = operator;
     }
     ,
     showNumber(number) {
-      if(this.Operator==""){
+      if(this.operator == ""){
         if(!this.isFraction){
           // console.log(Number(`${this.inputNumber}${number}`));
-          this.inputNumber = Number(`${this.inputNumber}${number}`);
-          
+          this.inputNum = Number(`${this.inputNum}${number}`);
         }else{
-          
-          
           // console.log(`${this.inputNumber}${number/10}`);
-          if(!isNaN(Number(`${this.inputNumber}${number/10}`))){
-            this.inputNumber =Number(`${this.inputNumber}${number/10}`);
+          if(!isNaN(Number(`${this.inputNum}${number/10}`))){
+            this.inputNum = Number(`${this.inputNum}${number/10}`);
           }else{
-            this.inputNumber = Number(`${this.inputNumber}${number}`);
+            this.inputNum = Number(`${this.inputNum}${number}`);
           }
-          this.isFraction=false
+          this.isFraction = false
         }
       }else{
-        if(this.secondNumber==""){
-          this.secondNumber=0;
+        if(this.secondNum == ""){
+          this.secondNum = 0;
         }
-        
         if(!this.isFraction){
           // console.log(Number(`${this.inputNumber}${number}`));
-          this.secondNumber = Number(`${this.secondNumber}${number}`);
-          
+          this.secondNum = Number(`${this.secondNum}${number}`);
         }else{
-          
-          
           // console.log(`${this.inputNumber}${number/10}`);
-          if(!isNaN(Number(`${this.secondNumber}${number/10}`))){
-            this.secondNumber =Number(`${this.secondNumber}${number/10}`);
+          if(!isNaN(Number(`${this.secondNum}${number/10}`))){
+            this.secondNum = Number(`${this.secondNum}${number/10}`);
           }else{
-            this.secondNumber = Number(`${this.secondNumber}${number}`);
+            this.secondNum = Number(`${this.secondNum}${number}`);
           }
-          this.isFraction=false
+          this.isFraction = false
         }
       }
       // Assign number when user click to the inputNumber data
